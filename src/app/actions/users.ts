@@ -39,7 +39,7 @@ export const signUp = async({username, email, password}: {username: string, emai
 		name: data.data.username,
 		email: data.data.email,
 		password: hashedPassword,
-        image: './avatar1.png',
+        image: '/avatar1.png',
 	};
 
     const user = new User(userInput)

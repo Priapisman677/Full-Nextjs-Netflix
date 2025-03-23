@@ -12,7 +12,7 @@ export const userSchema = z.object({
         searchHistory: z.array(z.string()).optional(),
 });
 
-type UserSchemaType = z.infer<typeof userSchema>;
+// type UserSchemaType = z.infer<typeof userSchema>;
 
 
 
@@ -21,4 +21,4 @@ export const LoginCredentialsSchema = z.object({
     password: z.string().min(1, "Password is required"),
 })
 
-type LoginSchemaType = z.infer<typeof LoginCredentialsSchema>
+// type LoginSchemaType = z.infer<typeof LoginCredentialsSchema>

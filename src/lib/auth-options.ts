@@ -46,7 +46,6 @@ export const authOptions: NextAuthOptions = {
                     if(!isPasswordValid){	
                         throw new Error('Invalid password')	
                     }
-                    // console.log('AUTHORIZE', {user});
 
                     return user
 
@@ -61,22 +60,23 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         jwt: ({token, user}) =>{
             if(user){ //* If it is the first time a person is logging in this is a token that wait will create:
-                return { ...token, id: user?.id, asl: user?.asl}
+                return { ...token, id: user?.id, custom: 'CUSTOM'}
             }
 
             //* If not we will just verify the token:
             return token
         },
         session:({session, token})=>{
+            
             return {
                 ...session,
                 user: {
                   ...session.user,
-                  id: token.id, 
+                  id: token.id,
+                  custom: token.custom
 
                 }
               };
-
         }
     }
 }

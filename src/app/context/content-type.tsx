@@ -1,0 +1,27 @@
+"use client"
+
+import React, { useState, createContext, useContext } from "react";
+
+
+type ContextType = {
+  contentType: string;
+  setcontentType: React.Dispatch<React.SetStateAction<string>>;
+};
+
+
+const Context = createContext<ContextType | null>(null);
+
+export default function ContentProvider({ children }: { children: React.ReactNode }) {
+  const [contentType, setcontentType] = useState("movie");
+
+  const value = { contentType, setcontentType };
+
+  return (<Context.Provider value={value}>{children}</Context.Provider>);
+}
+
+
+export const useContent = () => {
+  const ctx = useContext(Context);
+  if (!ctx) throw new Error("useContent must be used within a ContentProvider");
+  return ctx;
+};
