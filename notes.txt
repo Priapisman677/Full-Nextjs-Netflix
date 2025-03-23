@@ -1,0 +1,11 @@
+
+
+Node driver:
+mongodb+srv://mongodb:Carbon7@cluster0.w28i8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+Compass:
+mongodb+srv://mongodb:Carbon7@cluster0.w28i8.mongodb.net/
+
+
+TMDB API KEY:
+6c820ccce26a2bc28f97f83b0646a4fd
