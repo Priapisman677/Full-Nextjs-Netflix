@@ -1,15 +1,20 @@
 import { fetchFromTMDB } from "./fetchFromTMDB"
 
 
-export const getTrendingMovie = async(contentType: ContentType = 'movie')=>{
+export const getTrendingMovie = async(contentType: ContentType = 'movie'): Promise<{succress: boolean, content: PopularMovieResult | PopularTvResult}>=>{
 
-    console.log('FETCH CONTENT:',  `https://api.themoviedb.org/3/${contentType}/popular?language=en-US&page=1`);
+    // console.log('FETCH CONTENT:',  `https://api.themoviedb.org/3/${contentType}/popular?language=en-US&page=1`);
     
 
-    const data = await fetchFromTMDB<Movie>(`https://api.themoviedb.org/3/${contentType}/popular?language=en-US&page=1`);
-    const randomMovie = data.results[Math.floor(Math.random() * data.results.length)]
+    const data = await fetchFromTMDB<PopularMovie |  PopularTvShow>(`https://api.themoviedb.org/3/${contentType}/popular?language=en-US&page=1`);
+    const popularResult = data.results[Math.floor(Math.random() * data.results.length)]
 
-    return {succress: true, content: randomMovie}
+    if(popularResult.backdrop_path === null || popularResult.backdrop_path === undefined){
+        //* if no backdrop path, fetch again (recursive)
+        return getTrendingMovie(contentType)
+    }
+
+    return {succress: true, content: popularResult}
 }
 
 // export const getMovieTrailers = async( req: Request<{ id: string }>, res: Response )=>{

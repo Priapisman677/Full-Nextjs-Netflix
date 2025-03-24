@@ -9,13 +9,14 @@ import { useEffect, useState } from "react"
 // import { useContent } from "../context/content-type"
 import { Session } from "next-auth"
 import { setContentTypeCookie } from "@/app/actions/content-type-cookie"
+// import {useRouter} from 'next/navigation'
 
-export default function  Navbar() {
+export default function  Navbar({contentType}: {contentType: string}) {
 
     
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
     const [freshSession, setFreshSession] = useState<Session | null>(null)
-
+    // const router = useRouter()
     const toggleMobileMenu = ()=>{
     
         setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -29,6 +30,19 @@ export default function  Navbar() {
         await signOut({redirect: true, callbackUrl: '/signin'})
         return
     }
+
+    const handleContentTypeClick = async(type: ContentType)=>{
+    
+        await setContentTypeCookie(type)
+        //$ If we reload here it would take a certain amount of time (full page reload). 
+        //$ We could just redirect the user to their desired page such as (/watch/movie) And that would indeed get it rid of the delay but we would not be using cookies.
+        //$ I will prefer using cookies for now however just so I can study their behavior.
+        window.location.reload()
+        // router.refresh()
+        return
+    }
+
+    
 
     useEffect(()=>{
         const fetchSession = async()=>{
@@ -60,8 +74,8 @@ export default function  Navbar() {
                     </Link>
                     {/* desktop navbar items */}
                     <div className='hidden sm:flex gap-2 items-center'>
-                        <Link href='/' className='hover:underline' onClick={()=>{setContentTypeCookie('movie')}}> Movies </Link>
-                        <Link href='/' className='hover:underline' onClick={()=>{setContentTypeCookie('tv')}}> Tv Shows </Link>
+                        <Link href='/' className={`hover:underline ${contentType === 'movie' && 'font-bold'}`} onClick={()=>{handleContentTypeClick('movie')}}> Movies </Link>
+                        <Link href='/' className={`hover:underline ${contentType === 'tv' && 'font-bold'}`} onClick={()=>{handleContentTypeClick('tv')}}> Tv Shows </Link>
                         <Link href='/history' className='hover:underline'> Search History</Link>
                     </div>
                 </div>

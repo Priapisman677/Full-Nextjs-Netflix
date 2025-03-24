@@ -34,9 +34,16 @@ interface UserInput {
 
 
 
- interface MovieObject {
+ interface PopularMovie {
+    page:          number;
+    results:       PopularMovieResult[];
+    total_pages:   number;
+    total_results: number;
+}
+
+ interface PopularMovieResult {
     adult:             boolean;
-    backdrop_path:     string;
+    backdrop_path:     null | string;
     genre_ids:         number[];
     id:                number;
     original_language: string;
@@ -44,15 +51,12 @@ interface UserInput {
     overview:          string;
     popularity:        number;
     poster_path:       string;
-    release_date:      Date;
+    release_date:      string;
     title:             string;
     video:             boolean;
     vote_average:      number;
     vote_count:        number;
 }
-
-
- type Movie = {results: MovieObject[] }
 
 
  interface Video {
@@ -134,22 +138,41 @@ interface UserInput {
     total_results: number;
 }
 
- interface Result {
+
+ interface PopularTvShow {
+    page:          number;
+    results:       PopularTvResult[];
+    total_pages:   number;
+    total_results: number;
+}
+
+ interface PopularTvResult {
     adult:             boolean;
     backdrop_path:     null | string;
     genre_ids:         number[];
     id:                number;
-    original_language: string;
-    original_title:    string;
+    origin_country:    string[];
+    original_language: OriginalLanguage;
+    original_name:     string;
     overview:          string;
     popularity:        number;
-    poster_path:       string;
-    release_date:      Date;
-    title:             string;
-    video:             boolean;
+    poster_path:       null | string;
+    first_air_date:    string;
+    name:              string;
     vote_average:      number;
     vote_count:        number;
 }
 
+ enum OriginalLanguage {
+    De = "de",
+    En = "en",
+    Ja = "ja",
+}
+
+
 
 type ContentType = 'movie' | 'tv'
+
+
+
+

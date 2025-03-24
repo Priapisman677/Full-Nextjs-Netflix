@@ -13,8 +13,6 @@ export const signUp = async({username, email, password}: {username: string, emai
 	await connectDB()
 
 	const existingUser = await User.findOne({ email });
-
-	console.log(existingUser);
 	
 
 	if (existingUser) {

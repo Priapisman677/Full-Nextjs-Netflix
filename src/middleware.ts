@@ -39,7 +39,7 @@ export const middleware = async(req: NextRequest)=>{
 
     //$ This guy will make sure that even though the user is visiting "/", the request will be rewritten to "/watch" but they'll still be seeing the same URL. Behind, the server will be reWRITING the request to another URL without the user even noticing.
 
-    const contentType = req.cookies.get('content')?.value // "tv" OR "movie"
+    const contentType = req.cookies.get('content')?.value || 'movie' // "tv" OR "movie"
     if(path === "/" && token){
         return NextResponse.rewrite(new URL('/watch/' +  contentType, req.nextUrl))
     }

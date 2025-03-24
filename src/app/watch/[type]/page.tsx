@@ -26,40 +26,62 @@ import { getTrendingMovie } from "@/lib/fetchContent";
 // import UrlCleaner from "@/components/UrlCleaner";
 
 
+function isMovie(content: PopularMovieResult | PopularTvResult): content is PopularMovieResult {
+    //$ ✅ How to read it in plain English:
+    //$ "If release_date exists in this object, then you can treat it as a MovieObject safely."
+    return 'release_date' in content;
+  }
+
 interface Props {
-    params: Promise<{type: ContentType}> 
+    params: Promise<{type: ContentType | undefined}> 
 }
 
 export default async function HomeScreen({params}: Props) {
 
-    const {type} =  await params    
+    const {type} =  await params  
 
     console.log('CONTENT TYPE:   ',  type);
     
     
-    const ORIGINAL_IMG_BASE_URL = 'https://image.tmdb.org/t/p/original'
-
-    const {content: trendingContent} = await getTrendingMovie(type) 
-    console.log('TRENDING PATH:  ', trendingContent.backdrop_path);
     
-    console.log('IMAGE PATH:   ', ORIGINAL_IMG_BASE_URL + trendingContent.backdrop_path);
+    const {content: trendingContent} = await getTrendingMovie(type)
+    // console.log('TRENDING PATH:  ', backdropPath);
+    
+    const ORIGINAL_IMG_BASE_URL = 'https://image.tmdb.org/t/p/original'
+    
+    
+    const overview = trendingContent.overview.length > 200 ? trendingContent.overview.slice(0, 200) + '...' : trendingContent.overview
+    const backdropPath = trendingContent.backdrop_path;
+    let title: string;
+    let releaseYear: string;
+    // let rating: string;
+
+    if (isMovie(trendingContent)) { //- This is purely typescript, if we use type "any" there wouldn't be need for this.
+        title = trendingContent.title;
+        releaseYear = trendingContent.release_date.split('-')[0];
+        // rating = trendingContent.adult ? '18+' : 'pg-13';
+      } else {
+        title = trendingContent.name;
+        releaseYear = trendingContent.first_air_date.split('-')[0];
+        // rating = trendingContent.adult ? '18+' : 'pg-13';
+      }
     
 
     return (
         <>        
-            {/* <UrlCleaner pathName={'/watch'}></UrlCleaner> */}
+
 
             <div className='h-screen text-white relative'>
-                <Navbar />
-                <Image src={ORIGINAL_IMG_BASE_URL + trendingContent.backdrop_path} alt={"Hero image"} width={5000} height={5000} className="absolute top-0 left-0 h-full w-full object-cover -z-50"></Image>
+                <Navbar contentType={type  || 'movie'} />
+                <Image src={ORIGINAL_IMG_BASE_URL + backdropPath} alt={"Hero image"} width={5000} height={5000} className="absolute top-0 left-0 h-full w-full object-cover -z-50"></Image>
                 <div aria-hidden='true' className="absolute top-0 left-0  h-full w-full bg-black/50 -z-50" />
                 <div className='absolute top-0 left-0 w-full h-full flex flex-col justify-center px-8 md:px-16 lg:px-32 z-10'>
                 <div className='bg-gradient-to-b from-black via-transparent to-transparent absolute w-full h-full top-0 left-0 -z-10'/>
 
                     <div className='max-w-2xl'>
-                        <h1 className='mt-4 text-6xl font-extrabold text-balance'> {type} </h1>
-                        <p className='mt-2 text-lg'> 2014 | 18+ </p>
-                        <p className='mt-2 text-lg'> Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                        <h1 className='mt-4 text-6xl font-extrabold text-balance'> {title} </h1>
+                        <p className='mt-2 text-lg'> {releaseYear} </p>
+                        <p className='mt-2 text-lg'> {overview} </p>
                         <p className='mt-2 text-lg'> 1h 49min </p>
                     </div>
                     <div className="flex mt-8">
@@ -82,3 +104,4 @@ export const generateStaticParams = ()=>{
     return [{type: 'movie'}, {type: 'tv'}]    
 
 }
+
