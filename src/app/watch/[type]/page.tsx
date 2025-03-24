@@ -6,8 +6,7 @@
     /// We could enable some auto-job, but that is not currently my goal and would need more research.
 
 
-//$ Even though the page is revalidating, this log only happens 3 times in the lifetime of the server:
-    //$ 2 while building,  1 on starting. It has an explanation but it is poorly documented, but it is expected as far as I know.
+//$ Even though the page is revalidating, this log only happens 2 times in the lifetime of the server (during build):
 console.log('Rund npm run build and check I log! - HOME');
 
 
