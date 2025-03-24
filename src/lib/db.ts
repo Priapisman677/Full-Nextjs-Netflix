@@ -11,7 +11,7 @@ export const connectDB  = async()=>{
         return
     }
     try{
-        const conn = await mongoose.connect(process.env.MONGO_URI as string)
+        const conn = await mongoose.connect(process.env.MONGO_URI2 as string)
         console.log(chalk.inverse.green("MongoDB connected: ") + conn.connection.host ) 
         isConnected = true
     }catch(e){

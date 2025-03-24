@@ -29,7 +29,7 @@ export default async function RootLayout({ children,}: Readonly<{children: React
 
 	const session = await getServerSession(authOptions)
 
-	console.log('LAYOUT SESSION: ', session);
+	// console.log('LAYOUT SESSION: ', session);
 	
 
 	return (

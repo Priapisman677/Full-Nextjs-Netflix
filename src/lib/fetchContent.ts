@@ -1,9 +1,12 @@
 import { fetchFromTMDB } from "./fetchFromTMDB"
 
 
-export const getTrendingMovie = async()=>{
+export const getTrendingMovie = async(contentType: ContentType = 'movie')=>{
 
-    const data = await fetchFromTMDB<Movie>('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1')
+    console.log('FETCH CONTENT:',  `https://api.themoviedb.org/3/${contentType}/popular?language=en-US&page=1`);
+    
+
+    const data = await fetchFromTMDB<Movie>(`https://api.themoviedb.org/3/${contentType}/popular?language=en-US&page=1`);
     const randomMovie = data.results[Math.floor(Math.random() * data.results.length)]
 
     return {succress: true, content: randomMovie}

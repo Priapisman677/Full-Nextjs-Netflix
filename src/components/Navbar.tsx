@@ -6,12 +6,13 @@ import { getSession, signOut } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { useContent } from "../context/content-type"
+// import { useContent } from "../context/content-type"
 import { Session } from "next-auth"
+import { setContentTypeCookie } from "@/app/actions/content-type-cookie"
 
 export default function  Navbar() {
 
-    const { setcontentType } = useContent()
+    
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
     const [freshSession, setFreshSession] = useState<Session | null>(null)
 
@@ -59,8 +60,8 @@ export default function  Navbar() {
                     </Link>
                     {/* desktop navbar items */}
                     <div className='hidden sm:flex gap-2 items-center'>
-                        <Link href='/' className='hover:underline' onClick={()=>{setcontentType('movie')}}> Movies </Link>
-                        <Link href='/' className='hover:underline' onClick={()=>{setcontentType('tv')}}> Tv Shows </Link>
+                        <Link href='/' className='hover:underline' onClick={()=>{setContentTypeCookie('movie')}}> Movies </Link>
+                        <Link href='/' className='hover:underline' onClick={()=>{setContentTypeCookie('tv')}}> Tv Shows </Link>
                         <Link href='/history' className='hover:underline'> Search History</Link>
                     </div>
                 </div>

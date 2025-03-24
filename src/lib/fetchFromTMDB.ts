@@ -4,7 +4,7 @@ export const fetchFromTMDB = async <T>(url: string): Promise<T> => {
         accept: 'application/json',
         Authorization: 'Bearer ' + process.env.TMDB_API_KEY,
       },
-      next: { revalidate: 10 }, // ✅ if you want to revalidate here directly
+      next: { revalidate: 15 }, // ✅ if you want to revalidate here directly
     });
   
     if (!response.ok) {

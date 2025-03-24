@@ -152,3 +152,4 @@ interface UserInput {
 }
 
 
+type ContentType = 'movie' | 'tv'

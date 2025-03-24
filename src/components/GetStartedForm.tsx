@@ -14,7 +14,9 @@ export default function  GetStartedForm() {
         const email = new FormData(e.currentTarget as HTMLFormElement).get('email') 
         console.log("🚀 ~ handleSubmit ~ email:", email)
 
-        router.push('/signin?email=' + email)
+    
+
+        router.push('/signin?email=' + encodeURIComponent(email as string))
     
         return
     }
