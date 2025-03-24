@@ -2,19 +2,18 @@
 
 
 import { LogOut, Menu, Search } from "lucide-react"
-import { signOut, useSession } from "next-auth/react"
+import { getSession, signOut } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useContent } from "../context/content-type"
+import { Session } from "next-auth"
 
 export default function  Navbar() {
 
     const { setcontentType } = useContent()
-
-    
-
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
+    const [freshSession, setFreshSession] = useState<Session | null>(null)
 
     const toggleMobileMenu = ()=>{
     
@@ -29,12 +28,25 @@ export default function  Navbar() {
         await signOut({redirect: true, callbackUrl: '/signin'})
         return
     }
-    
 
+    useEffect(()=>{
+        const fetchSession = async()=>{
+        
+            const session = await getSession()
+            setFreshSession(session)
+        
+            return
+        }
+        fetchSession()
+    }, [])
 
-    const { data } = useSession()
-
-
+    const userImage = ()=>{
+        if(!freshSession){
+            return <div className="h-8 w-8 rounded bg-gray-700 animate-pulse" />
+        }else {
+            return  <img src={'/media' + freshSession?.user?.image} className="h-8 rounded cursor-pointer"></img>
+        }
+    }
         
 
     return (
@@ -55,7 +67,7 @@ export default function  Navbar() {
                 <div className="flex gap-3 items-center z-50">
                     <Link href={"/search"}> <Search className='size-7 cursor-pointer'/> </Link>
 
-                    <img src={'/media' + data?.user?.image} className="h-8 rounded cursor-pointer"></img>
+                    {userImage()}
 
                     <LogOut onClick={handleLogout} className="cursor-pointer"></LogOut>
                     {/* <img src={user.image} alt='Avatar' className='h-8 rounded cursor-pointer' /> */}

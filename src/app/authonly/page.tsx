@@ -1,21 +1,13 @@
-import { authOptions } from "@/lib/auth-options";
-import { getServerSession } from "next-auth"
 
 
+export const dynamic = 'force-static'
 
 export default async function NewPage() {
 
-    const session = await getServerSession(authOptions)
-
-    if(session){
-        console.log({sessionAuthOnly: session});
-        
-    } else {
-        console.log('bad');
-        
-    }
+    console.log('authonly');
+    
 
     return (
-        <div>NewPage</div>
+        <div>AUTH ONLY</div>
     )
 }

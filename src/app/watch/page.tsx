@@ -1,15 +1,29 @@
-"use client"
+//% This will get rendered in the server!!!!!!!!!
+console.log('Rund npm run build and check I log! - HOME');
 
+
+
+export const dynamic = 'force-static'
+// ⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️
+
+export const revalidate = 10
 
 import Image from "next/image"
-import Navbar from "../components/Navbar"
 import Link from "next/link"
 import { Info, Play } from "lucide-react"
+import Navbar from "@/components/Navbar"
+import { getTrendingMovie } from "@/lib/fetchContent";
 
-export default function  HomeScreen() {
 
 
-   
+export default async function HomeScreen() {
+    
+
+    //? Update: Even though I am calling this fetch request inside of this componentduring build it still logs the log that I put at the top which means that this is a server component (Rendered in the server)
+    const {content: trendingContent} = await getTrendingMovie() 
+    console.log(trendingContent.id);
+    
+    
 
     return (
         <>        
@@ -40,5 +54,6 @@ export default function  HomeScreen() {
         </>
     )
 }
+
 
 
