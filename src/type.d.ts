@@ -1,25 +1,21 @@
+@collapse
+
 type UserCredentials = { username: string; password: string, email: string };
 
 
-interface ReceivedUser {
-    name: string;
-    email: string;
-    image?: string
-    searchHistory?:  []
-    createdAt: Date;
-    updatedAt: Date;
-}
+// interface ReceivedUser {
+//     name: string;
+//     email: string;
+//     image?: string
+//     searchHistory?:  []
+//     createdAt: Date;
+//     updatedAt: Date;
+// }
 
-type ServerMessage = {
-    message: string
-    error? : any
-    data?: any
-    success: boolean
-}
 
-interface SuccessUserBack extends ServerMessage {
-    data: ReceivedUser
-}
+// interface SuccessUserBack extends ServerMessage {
+//     data: ReceivedUser
+// }
 
 
 
@@ -31,17 +27,14 @@ interface UserInput {
     searchHistory?:  []
 }
 
-
-
-
- interface PopularMovie {
+ interface MovieByCategory {
     page:          number;
-    results:       PopularMovieResult[];
+    results:       MovieByCategoryResult[];
     total_pages:   number;
     total_results: number;
 }
 
- interface PopularMovieResult {
+ interface MovieByCategoryResult {
     adult:             boolean;
     backdrop_path:     null | string;
     genre_ids:         number[];
@@ -138,15 +131,14 @@ interface UserInput {
     total_results: number;
 }
 
-
- interface PopularTvShow {
+ interface TvShowByCategory {
     page:          number;
-    results:       PopularTvResult[];
+    results:       TvShowByCategoryResult[];
     total_pages:   number;
     total_results: number;
 }
 
- interface PopularTvResult {
+ interface TvShowByCategoryResult {
     adult:             boolean;
     backdrop_path:     null | string;
     genre_ids:         number[];
@@ -170,8 +162,10 @@ interface UserInput {
 }
 
 
-
 type ContentType = 'movie' | 'tv'
+
+type Movie_Category = 'now_playing' | 'upcoming' | 'top_rated' | 'popular'
+type Tv_Category = 'airing_today' | 'on_the_air' | 'top_rated' | 'popular'
 
 
 

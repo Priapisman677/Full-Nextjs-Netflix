@@ -6,7 +6,6 @@ import { Toaster } from 'react-hot-toast';
 import { Provider } from '../context/session-provider';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-options';
-import ContentProvider from '../context/content-type';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -36,10 +35,8 @@ export default async function RootLayout({ children,}: Readonly<{children: React
 		<html lang="en">
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 				<Provider session={session}>
-					<ContentProvider>
 							<Toaster></Toaster>
 							{children}
-					</ContentProvider>
 				</Provider>
 			</body>
 		</html>

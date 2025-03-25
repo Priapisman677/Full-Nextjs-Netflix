@@ -11,7 +11,7 @@ type ContextType = {
 
 const Context = createContext<ContextType | null>(null);
 
-export default function ContentProvider({ children }: { children: React.ReactNode }) {
+function ContentProvider({ children }: { children: React.ReactNode }) {
   const [contentType, setcontentType] = useState("movie");
 
   const value = { contentType, setcontentType };
@@ -20,7 +20,7 @@ export default function ContentProvider({ children }: { children: React.ReactNod
 }
 
 
-export const useContent = () => {
+const useContent = () => {
   const ctx = useContext(Context);
   if (!ctx) throw new Error("useContent must be used within a ContentProvider");
   return ctx;

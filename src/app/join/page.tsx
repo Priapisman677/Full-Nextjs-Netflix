@@ -10,8 +10,8 @@ export const dynamic = 'force-static'
 // ⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️
 
 import Link from "next/link"
-import GetStartedForm from "../../components/GetStartedForm"
-import UrlCleaner from "@/components/UrlCleaner";
+import GetStartedForm from "../../components/client-components/GetStartedForm"
+import UrlCleaner from "@/components/client-components/UrlCleaner";
 
 
 

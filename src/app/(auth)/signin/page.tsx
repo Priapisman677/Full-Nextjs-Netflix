@@ -1,6 +1,6 @@
 "use client"
 
-import { SignInForm } from "@/components/SignInForm";
+import { SignInForm } from "@/components/client-components/SignInForm";
 import Link from "next/link";
 import { Suspense } from "react";
 // import { useState } from "react";
